@@ -10,7 +10,7 @@ account_sid = os.environ["TWILIO_ACCOUNT_SID"]
 auth_token = os.environ["TWILIO_AUTH_TOKEN"]
 
 
-def genarates_giphy(lst):
+def generates_giphy(lst):
     """ generates a giphy from random to text """
 
     giphy_url = choice(lst)
@@ -21,15 +21,15 @@ def send_text(key_word):
     """ """
     client = Client(account_sid, auth_token)
 
-    data = giphy.gerenate_json_giphys(key_word)
+    data = giphy.generates_json_giphys(key_word)
 
     giphy_list = giphy.create_embed_list(data)
 
     message = client.messages.create(
         to=my_number,
         from_=twilio_number,
-        body=genarates_giphy(giphy_list))
+        body=generates_giphy(giphy_list))
 
     return(message.sid)
 
-send_text("happy moon")
+send_text("happy")

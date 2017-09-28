@@ -10,10 +10,12 @@ giphy_key = os.environ["GIPHY_API_KEY"]
 key_word = "hapy birthday"
 
 
-def gerenate_json_giphys(key_word):
-    """ """ 
-    payload = { "q": key_word,
-                "apikey": giphy_key,
+def generates_json_giphys(key_word):
+    """ generates """
+
+    payload = {
+            "q": key_word,
+            "apikey": giphy_key,
                 }
 
     r = requests.get("http://api.giphy.com/v1/gifs/search?", params=payload)
@@ -33,10 +35,9 @@ def create_embed_list(giphy_data):
 
     for obj in data:
         giphy_list.append(obj['embed_url'])
-  
     return giphy_list
 
-data = gerenate_json_giphys(key_word)
-print gerenate_json_giphys(key_word)
+data = generates_json_giphys(key_word)
+print generates_json_giphys(key_word)
 print
 print create_embed_list(data)
