@@ -31,5 +31,3 @@ def send_text(key_word):
         body=generates_giphy(giphy_list))
 
     return(message.sid)
-
-send_text("happy")

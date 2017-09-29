@@ -5,11 +5,27 @@
 
 {% endblock %}
 {% block content %}
-  <h1>Welcome!</h1>
+<h1>Welcome!</h1>
+
+<form action="/login">
+<!-- 
+  Username:
+    <input type="text" name="username"><br>
+
+  Password:
+    <input type="text" name="password"><br> -->
+
+  <input type="submit" value="LogIn">
+  <br><br>
+
+</form>
+
+<form action="/register"> 
+
+    <input type="submit" value="Register">
+    <br><br>
+
+</form>
 
 
-   <div>  </div>
-
-
- <!-- <p>Welcome to my AWESOME homepage.</p> -->
 {% endblock %}

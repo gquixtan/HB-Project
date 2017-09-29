@@ -14,9 +14,9 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    fname = db.Column(db.String(69), nullable=False)
-    lname = db.Column(db.String(69), nullable=False)
-    password = db.Column(db.String(69), nullable=True)
+    fname = db.Column(db.String(123), nullable=False)
+    lname = db.Column(db.String(123), nullable=False)
+    password = db.Column(db.String(123), nullable=False)
 
 
     def __repr__(self):
@@ -32,11 +32,11 @@ class Text(db.Model):
 
     text_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    giphy_keyword = db.Column(db.String(69), nullable=True)
-    phone = db.Column(db.String(12), nullable=True)
-    msg_descirption = db.Column(db.Text, nullable=False)
-    send_out_date = db.Column(db.DateTime, nullable=True)
-    # creation_date = db.Column(db.DateTime, nullable=False)
+    giphy_keyword = db.Column(db.String(68), nullable=False)
+    phone = db.Column(db.String(12), nullable=False)
+    msg_descirption = db.Column(db.Text, nullable=True)
+    send_out_date = db.Column(db.DateTime, nullable=False)
+    creation_date = db.Column(db.DateTime, nullable=False)
 
 
     # Define relationship to user

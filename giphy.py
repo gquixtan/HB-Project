@@ -7,7 +7,7 @@ import requests
 giphy_key = os.environ["GIPHY_API_KEY"]
 
 # key word to query for giphys
-key_word = "hapy birthday"
+# key_word = "hapy birthday"
 
 
 def generates_json_giphys(key_word):
@@ -37,7 +37,7 @@ def create_embed_list(giphy_data):
         giphy_list.append(obj['embed_url'])
     return giphy_list
 
-data = generates_json_giphys(key_word)
-print generates_json_giphys(key_word)
-print
-print create_embed_list(data)
+# data = generates_json_giphys(key_word)
+# print generates_json_giphys(key_word)
+# print
+# print create_embed_list(data)

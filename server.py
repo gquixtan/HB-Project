@@ -1,10 +1,7 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 import urllib
 import json
-
-# from random import choice, sample
-# import os
-# import giphy
+import twilio_text
 
 
 app = Flask(__name__)
@@ -15,6 +12,35 @@ def index():
     """Return homepage."""
 
     return render_template("index.html")
+
+
+@app.route("/login")
+def login():
+    """ login the user """
+
+    return render_template("login.html")
+
+
+@app.route("/register")
+def register():
+    """ create new user """
+
+    return render_template("register.html")
+
+
+@app.route("/sendtext")
+def get_keyword():
+    """ """
+
+    keyword = request.args.get("keyword")
+
+    twilio_text.send_text(keyword)
+    # test = twilio_text.send_text(keyword)
+    # print test
+
+    # flash("Message has been submitted!")
+
+    return redirect("/profile")
 
 
 @app.route("/profile")
