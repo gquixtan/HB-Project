@@ -1,9 +1,8 @@
-""" Models for msgs db. """
+""" Models for texts db. """
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import update
 from datetime import datetime
 from flask import Flask
-# from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
@@ -16,66 +15,60 @@ class User(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     fname = db.Column(db.String(123), nullable=False)
     lname = db.Column(db.String(123), nullable=False)
+    username = db.Column(db.String, nullable=False)
     password = db.Column(db.String(123), nullable=False)
-
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<User user_id=%s fname=%s lname=%s>" % (self.user_id, self.fname,
-                                                                self.lname)
+        return "<User user_id=%s fname=%s lname=%s username%s>" % (self.user_id,
+                                                                   self.fname,
+                                                                   self.lname,
+                                                                   self.username)
+
 
 class Text(db.Model):
     """Text model."""
 
-    __tablename__ = "txts"
+    __tablename__ = "texts"
 
     text_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    giphy_keyword = db.Column(db.String(68), nullable=False)
-    phone = db.Column(db.String(12), nullable=False)
-    msg_descirption = db.Column(db.Text, nullable=True)
+    keyword = db.Column(db.String(123), nullable=False)
+    phone = db.Column(db.String(10), nullable=False)
+    msg = db.Column(db.Text, nullable=True)
     send_out_date = db.Column(db.DateTime, nullable=False)
-    creation_date = db.Column(db.DateTime, nullable=False)
-
 
     # Define relationship to user
-    user = db.relationship("Text", backref=db.backref("users"))
+    user = db.relationship("User", backref="texts")
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Text text_id=%s user_id=%s giphy_keyword=%s phone=%s msg_descirption=%s send_out_date=%s >" % (self.text_id,
-                                                                                              self.user_id,
-                                                                                              self.giphy_keyword,
-                                                                                              self.phone,
-                                                                                              self.msg_descirption,
-                                                                                              self.send_out_date)
-
-
-def init_app():
-    # So that we can use Flask-SQLAlchemy, we'll make a Flask app.
-    from flask import Flask
-    app = Flask(__name__)
-
-    connect_to_db(app)
-    print "Connected to DB."
+        return "<Text text_id=%s user_id=%s keyword=%s phone=%s msg=%s send_out_date=%s >" % (self.text_id,
+                                                                                                              self.user_id,
+                                                                                                              self.keyword,
+                                                                                                              self.phone,
+                                                                                                              self.msg,
+                                                                                                              self.send_out_date)
 
 
 def connect_to_db(app):
     """Connect the database to our Flask app."""
 
     # Configure to use our database.
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres:///msgs'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres:///texts'
     app.config['SQLALCHEMY_ECHO'] = True
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
-    # db.create_all()
-    # db.session.commit()
 
 if __name__ == "__main__":
     # from flask import Flask
+    from server import app
     app = Flask(__name__)
     connect_to_db(app)
     print "Connected to DB."
+
+    db.create_all()
+

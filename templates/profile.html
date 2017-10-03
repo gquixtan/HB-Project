@@ -5,25 +5,34 @@
 
 {% endblock %}
 {% block content %}
-  <h1>My Profile</h1>
- <p>.</p>
+  <h1>Hi {{ fname }}, Welcome! </h1>
 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<br><br>
 
  
 <form action="/sendtext">
 
     <label>SUBMIT YOUR NEXT TEXT</label><br><br>
-    First Name:<br>
-    <input type="text" name="firstname" value=""><br><br>
-    Last Name:<br>
-    <input type="text" name="lasttname" value=""><br><br>
-    Keyword<br>
+    Keyword: <br>
     <input type="text" name="keyword" value="" required><br><br>
-    Schedule Date<br>
-    <input id="date" type="date"><br><br>
+    Message: <br>
+    <input type="text" name="msg"><br><br>
+    Schedule Date: <br>
+    <input id="date" type="date" name="date" required><br><br>
+    Phone Number: <br>
+    <input id="phone" name="phone" type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required><br><br>
+    <input type="submit" value="Submit"><br>
 
-    <input type="submit" value="Submit">
+</form><br><br>
 
-</form>
+
+<a href="/logout">Log out.</a>
 
 {% endblock %}
