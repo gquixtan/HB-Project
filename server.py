@@ -3,6 +3,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
 import json
 import twilio_text
+# from datetime import datetime
 from model import connect_to_db, db, User, Text
 
 
@@ -105,15 +106,18 @@ def text_form():
     phone = request.args.get("phone")
     msg = request.args.get("msg")
 
+
+
     text = db.session.query(Text).filter(Text.user_id == user_id, Text.phone == phone, 
-                                        Text.send_out_date == send_out_date)
+                                        Text.send_out_date == send_out_date, 
+                                        Text.keyword == keyword, Text.msg == msg).first()
+    # print text
+
 
     if text is None:
         text = Text(user_id=user_id, keyword=keyword, phone=phone, msg=msg, send_out_date=send_out_date)
-        print text
         db.session.add(text)
         db.session.commit()
-    else:
         flash("Message has been submitted!")
         return redirect("/profile")
 
@@ -147,7 +151,7 @@ def log_out():
     else:
         print "Youn need to sign in" 
         # flash("Youn need to sign in")
-    flash('You were successfully logged in')    
+    # flash('You were successfully logged out')    
     return redirect('/')
 
 
