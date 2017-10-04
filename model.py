@@ -53,6 +53,10 @@ class Text(db.Model):
                                                                                                               self.send_out_date)
 
 
+
+# add a column sent (t/f)?
+# creation_date = db.Column(db.DateTime, nullable=True, default=None) ??? 
+
 def connect_to_db(app):
     """Connect the database to our Flask app."""
 
