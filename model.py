@@ -38,6 +38,7 @@ class Text(db.Model):
     phone = db.Column(db.String(10), nullable=False)
     msg = db.Column(db.Text, nullable=True)
     send_out_date = db.Column(db.DateTime, nullable=False)
+    sent = db.Column(db.Boolean, nullable=True)
 
     # Define relationship to user
     user = db.relationship("User", backref="texts")
@@ -45,12 +46,13 @@ class Text(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Text text_id=%s user_id=%s keyword=%s phone=%s msg=%s send_out_date=%s >" % (self.text_id,
+        return "<Text text_id=%s user_id=%s keyword=%s phone=%s msg=%s send_out_date=%s sent=%s>" % (self.text_id,
                                                                                                               self.user_id,
                                                                                                               self.keyword,
                                                                                                               self.phone,
                                                                                                               self.msg,
-                                                                                                              self.send_out_date)
+                                                                                                              self.send_out_date,
+                                                                                                              self.sent)
 
 
 

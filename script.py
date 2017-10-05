@@ -46,35 +46,42 @@ def todays_query():
 	# doing a query for texts that need to be send out
 	text = db.session.query(Text).filter((Text.send_out_date > yesterday ) & (Text.send_out_date < tomorrow)).all()
 
-	# print "text is ", text
+	print "text is ", text
 	# print "*********************************"
 
 	text_data = [ ]
 
 	for item in text:
-		text_data.append({"keyword": item.keyword, "phone": item.phone, "date": item.send_out_date})
+		print item
+		text_data.append({"id": item.text_id, "keyword": item.keyword, "phone": item.phone, "msg": item.msg, "date": item.send_out_date, "sent": item.sent})
 
 	return text_data
 
 
 def new_func(text_data):
 	""" """ 
-	print "this is the length of the list is: ", len(text_data)
-
-	print "*********************************"	
+	# print "this is the length of the list is: ", len(text_data)
+	# print "*********************************"
 
 	for item in text_data:
 		keyword = item["keyword"]
-		
+		text_id = item["id"]
 		# this is for twilio/giphy set up
-		test = twilio_text.send_text(keyword)
+		response = twilio_text.send_text(keyword)
+		# print response
 
-		print test
-		
+		sent = db.session.query(Text).filter(Text.text_id == text_id).first()
+		# print sent
 
-	print "*********************************"		
 
-	
+		if response.status == "queued":
+			sent.sent=True
+			db.session.add(sent)
+			db.session.commit()
+		else:
+			sent.sent=False
+			db.session.add(sent)
+			db.session.commit()	
 
 
 if __name__ == "__main__":
@@ -83,7 +90,11 @@ if __name__ == "__main__":
     app = Flask(__name__)
     connect_to_db(app)
 
-    text_data = todays_query()
     todays_query()
+
+    text_data = todays_query()
     new_func(text_data)
+
+    # test = new_func(text_data)
+    # sent(test)
 

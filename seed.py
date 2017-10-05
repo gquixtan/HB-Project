@@ -42,14 +42,13 @@ def load_texts():
 
         # removes all the extra white space from the rows and splits at the pipe (makes a list)
         row = row.rstrip().split("|")
-        # print row[0:5] 
 
         # I was getting this ("ValueError: too many values to unpack") so i slice the unpacking into 2.
         text_id, user_id, keyword= row[0:3]
-        phone, msg, send_out_date = row[3:]
+        phone, msg, send_out_date, sent = row[3:]
 
         text = Text(text_id=text_id, user_id=user_id, keyword=keyword, phone=phone,
-                    msg=msg, send_out_date=send_out_date)
+                    msg=msg, send_out_date=send_out_date, sent=sent)
 
         # need to have "add" to the session or it won't ever be stored
         db.session.add(text)
@@ -94,3 +93,4 @@ if __name__ == "__main__":
     load_users()
     load_texts()
     set_val_user_id()
+    set_val_text_id()

@@ -30,4 +30,4 @@ def send_text(key_word):
         from_=twilio_number,
         body=generates_giphy(giphy_list))
 
-    return(message.sid)
+    return(message)
