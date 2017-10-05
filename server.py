@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
-import json
+# import json
 import twilio_text
 # from datetime import datetime
 from model import connect_to_db, db, User, Text

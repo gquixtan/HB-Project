@@ -6,6 +6,7 @@ from flask import Flask
 import time
 from datetime import datetime, date, timedelta
 import pytz
+import twilio_text
 
 
 # create a function that does the query from db looking for send_out_date
@@ -13,17 +14,25 @@ import pytz
 # looop thro the things that need to go out from db 
 
 
+
 def todays_query():
-	""" search for texts """ 
+	""" Does a query for texts that need to be send out. """ 
 
-	pacific = pytz.timezone('US/Pacific')
 
-	today = datetime.now(tz=pacific)
-	# print "today is ", today
+	# print "*************************************"
+
+	today = datetime.now()
+	print "Today is ", today
+
 	yesterday = today - timedelta(1)
+	print "Yesterday is ", yesterday
 
-	print "yesterday is ", yesterday
 
+	tomorrow = today + timedelta(1)
+	print "Tomorrow is ", tomorrow
+
+
+	
 	todays_date = today.isoformat()
 	today = todays_date[0:10]
 
@@ -31,26 +40,50 @@ def todays_query():
 	yesterdays_date = yesterday.isoformat()
 	yesterday = yesterdays_date[0:10]
 
-	# doing a query for texts that need to be send out
-	text = db.session.query(Text).filter((Text.send_out_date == today) | (Text.send_out_date == yesterday)).all()
-	print "*********************************"
-	print "text is ", text
-	print "*********************************"
+	tomorrows_date = tomorrow.isoformat()
+	tomorrow = tomorrows_date[0:10]
 
-	text_data = []
+	# doing a query for texts that need to be send out
+	text = db.session.query(Text).filter((Text.send_out_date > yesterday ) & (Text.send_out_date < tomorrow)).all()
+
+	# print "text is ", text
+	# print "*********************************"
+
+	text_data = [ ]
 
 	for item in text:
-		text_data.append(item.keyword)
-		text_data.append(item.phone)
-		text_data.append(item.send_out_date)
-
+		text_data.append({"keyword": item.keyword, "phone": item.phone, "date": item.send_out_date})
 
 	return text_data
+
+
+def new_func(text_data):
+	""" """ 
+	print "this is the length of the list is: ", len(text_data)
+
+	print "*********************************"	
+
+	for item in text_data:
+		keyword = item["keyword"]
+		
+		# this is for twilio/giphy set up
+		test = twilio_text.send_text(keyword)
+
+		print test
+		
+
+	print "*********************************"		
+
+	
+
 
 if __name__ == "__main__":
 	# need this here to connect to db otherwise otherwise: "RuntimeError: No application found" 
     from server import app
     app = Flask(__name__)
     connect_to_db(app)
-    print todays_query()	
+
+    text_data = todays_query()
+    todays_query()
+    new_func(text_data)
 
