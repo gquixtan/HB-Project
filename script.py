@@ -43,7 +43,7 @@ def todays_query():
 	tomorrows_date = tomorrow.isoformat()
 	tomorrow = tomorrows_date[0:10]
 
-	# doing a query for texts that need to be send out
+	# doing a query for texts that need to be send out (UTC time is 7 hours ahead of Pacific Time)
 	text = db.session.query(Text).filter((Text.send_out_date > yesterday ) & (Text.send_out_date < tomorrow)).all()
 
 	print "text is ", text
@@ -78,10 +78,10 @@ def new_func(text_data):
 			sent.sent=True
 			db.session.add(sent)
 			db.session.commit()
-		else:
-			sent.sent=False
-			db.session.add(sent)
-			db.session.commit()	
+		# else:
+		# 	sent.sent=False
+		# 	db.session.add(sent)
+		# 	db.session.commit()	
 
 
 if __name__ == "__main__":

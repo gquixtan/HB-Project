@@ -38,7 +38,7 @@ class Text(db.Model):
     phone = db.Column(db.String(10), nullable=False)
     msg = db.Column(db.Text, nullable=True)
     send_out_date = db.Column(db.DateTime, nullable=False)
-    sent = db.Column(db.Boolean, nullable=True)
+    sent = db.Column(db.Boolean, nullable=True, default=False)
 
     # Define relationship to user
     user = db.relationship("User", backref="texts")

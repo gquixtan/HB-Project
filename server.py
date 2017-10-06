@@ -93,7 +93,7 @@ def register_form():
     else:
         return redirect("/login")
 
-    return redirect("/login")    
+    return redirect("/login")
 
 
 @app.route("/sendtext")
