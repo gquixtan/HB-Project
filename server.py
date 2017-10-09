@@ -151,14 +151,14 @@ def log_out():
     else:
         print "Youn need to sign in" 
         # flash("Youn need to sign in")
-    # flash('You were successfully logged out')    
+
+    flash('You were successfully logged out')    
     return redirect('/')
 
 
 if __name__ == "__main__":
 
     # app.run(port=5000, host='0.0.0.0')
-
     app.jinja_env.auto_reload = app.debug  # make sure templates, etc. are not cached in debug mode
 
     connect_to_db(app)

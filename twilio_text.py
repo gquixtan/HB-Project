@@ -1,6 +1,5 @@
 from twilio.rest import Client
 import os, giphy
-import urllib
 import json
 from random import choice, sample
 

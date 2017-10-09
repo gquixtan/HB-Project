@@ -1,35 +1,39 @@
-""" coonects to texts db """
+""" coonects to texts db this script should be ran everyday at 1pm (PT)"""
 from model import connect_to_db, db, User, Text
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import update
 from flask import Flask
 import time
 from datetime import datetime, date, timedelta
-import pytz
 import twilio_text
 
 
-# create a function that does the query from db looking for send_out_date
+# todays_query does the query from the db:
 # if there is one today or before today that needs to go out
-# looop thro the things that need to go out from db 
-
-
 
 def todays_query():
 	""" Does a query for texts that need to be send out. """ 
 
 
-	# print "*************************************"
+	print "*************************************"
 
+	# today is based on UTC (7 hours ahead of actual time)
 	today = datetime.now()
 	print "Today is ", today
 
-	yesterday = today - timedelta(1)
+	print "*********************************"
+
+	# yesterday is set to UTC time (1 day behind)
+	yesterday = today - timedelta(days=1)
+	print "*********************************"
 	print "Yesterday is ", yesterday
 
 
-	tomorrow = today + timedelta(1)
+	# tomorrow is set to UTC time (1 day ahead)
+	tomorrow = today + timedelta(days=1)
+	print "*********************************"
 	print "Tomorrow is ", tomorrow
+	print "*********************************"	
 
 
 	
@@ -44,44 +48,50 @@ def todays_query():
 	tomorrow = tomorrows_date[0:10]
 
 	# doing a query for texts that need to be send out (UTC time is 7 hours ahead of Pacific Time)
-	text = db.session.query(Text).filter((Text.send_out_date > yesterday ) & (Text.send_out_date < tomorrow)).all()
+	text = db.session.query(Text).filter((Text.send_out_date > yesterday ) & (Text.send_out_date < tomorrow) & (Text.sent == "f")).all()
 
 	print "text is ", text
-	# print "*********************************"
+	print "*********************************"
 
+	# crerating a list of nested dicts and each dict is a text,
 	text_data = [ ]
 
 	for item in text:
-		print item
+		# print item
+		# creating a dict and adding it to text_data list
 		text_data.append({"id": item.text_id, "keyword": item.keyword, "phone": item.phone, "msg": item.msg, "date": item.send_out_date, "sent": item.sent})
 
 	return text_data
 
 
-def new_func(text_data):
-	""" """ 
-	# print "this is the length of the list is: ", len(text_data)
-	# print "*********************************"
+def send_text(text_data):
+	""" This function is passing a nested list of dicts & checks for texts that need to be send and if they alredy were sent for the day
+	they do not get resend """
 
 	for item in text_data:
 		keyword = item["keyword"]
 		text_id = item["id"]
-		# this is for twilio/giphy set up
-		response = twilio_text.send_text(keyword)
-		# print response
+		msg = item["msg"]
+		status = item["sent"]
 
-		sent = db.session.query(Text).filter(Text.text_id == text_id).first()
-		# print sent
+		# This checks for text status and if it was succefully sent it will not send it again. 
+		if status == True:
+			return "*** ALREADY SENT ***"
 
+		else:
+			# this is for twilio/giphy response
+			response = twilio_text.send_text(keyword)
 
-		if response.status == "queued":
-			sent.sent=True
-			db.session.add(sent)
-			db.session.commit()
-		# else:
-		# 	sent.sent=False
-		# 	db.session.add(sent)
-		# 	db.session.commit()	
+			# this checks status of the sent text and updates the DB.
+			sent = db.session.query(Text).filter(Text.text_id == text_id).first()
+
+			# if the response of a text is succesful then the status of sent becomes True.
+			if response.status == "queued":
+				sent.sent=True
+				db.session.add(sent)
+				db.session.commit()
+
+		print "*** successfully sent & added to db ***"	
 
 
 if __name__ == "__main__":
@@ -93,8 +103,5 @@ if __name__ == "__main__":
     todays_query()
 
     text_data = todays_query()
-    new_func(text_data)
-
-    # test = new_func(text_data)
-    # sent(test)
+    send_text(text_data)
 

@@ -7,6 +7,16 @@
 {% block content %}
 <h1>Welcome!</h1>
 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<br><br>
+
+
 <form action="/login">
 
 
