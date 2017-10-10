@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}User Texts{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+
+  {% block content %}
+
+  <h1>Hey {{ fname }}! </h1><br>
+
+    <h2>Your Text History:</h2><br>
+
+
+    <table>
+    {% for text in user_texts %}
+		<tr>
+	    <td>KEYWORD </td>
+	    <td>TO </td>
+	    <td>DATE </td>
+	    <td>SENT </td>
+	  	</tr>
+		<tr>
+	  	<td>{{ text.keyword }}</td>
+	    <td>{{ text.phone }}</td>
+	    <td>{{ text.send_out_date.strftime("%B %d, %Y") }}</td>
+	    <td>{{ text.sent }}</td>
+		</tr>
+    {% endfor %}		
+  
+	</table><br><br>
+
+
+<a href="/profile">Profile</a><br><br>
+
+<a href="/logout">Log out</a>    
+
+{% endblock %}

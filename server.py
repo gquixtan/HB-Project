@@ -47,7 +47,8 @@ def login_process():
 
     # if the user in not registered redirect them to register
     if user is None:
-        return redirect("/register")
+        flash ("Oops, did you type the right username or password?")
+        return redirect("/login")
     # if the is in the db redirect them to their profile and flashed them a succeful logged in msg
     else:
         # flash('You were successfully logged in')
@@ -56,7 +57,7 @@ def login_process():
         session['fname'] = user.fname
         fname = session['fname']
 
-        flash('You were successfully logged in')
+        flash("You were successfully logged in")
         return redirect("/profile")
 
 
@@ -121,24 +122,26 @@ def text_form():
         flash("Message has been submitted!")
         return redirect("/profile")
 
-    return redirect("/profile")            
-
-
-    # this is for twilio/giphy set up
-    # twilio_text.send_text(keyword)
-    # test = twilio_text.send_text(keyword)
-    # print test
-
-    # flash("Message has been submitted!")
-
-    # return redirect("/profile")
+    return redirect("/profile")
 
 
 @app.route("/profile")
-def say_hello():
-    """Simple profile page."""
+def show_profile():
+    """Render profile page."""
+
 
     return render_template("profile.html", username=session['username'], fname=session['fname'])
+
+
+@app.route("/texts")
+def get_texts():
+    """ This route does a query for user's texts """
+
+    user_texts = db.session.query(Text).filter(Text.user_id == session['user_id']).all()
+
+
+    return render_template("user_texts.html", fname=session['fname'], user_texts=user_texts)
+
 
 @app.route('/logout')
 def log_out():
@@ -157,12 +160,12 @@ def log_out():
 
 
 if __name__ == "__main__":
-
     # app.run(port=5000, host='0.0.0.0')
+    app.debug = True
     app.jinja_env.auto_reload = app.debug  # make sure templates, etc. are not cached in debug mode
 
     connect_to_db(app)
 
     # Use the DebugToolbar
     DebugToolbarExtension(app)
-    app.run(debug=True, host='0.0.0.0')
+    app.run(host='0.0.0.0')

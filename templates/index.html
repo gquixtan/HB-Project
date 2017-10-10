@@ -5,7 +5,7 @@
 
 {% endblock %}
 {% block content %}
-<h1>Welcome!</h1>
+<h1>Welcome!</h1><br>
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -14,7 +14,6 @@
     {% endfor %}
   {% endif %}
 {% endwith %}
-<br><br>
 
 
 <form action="/login">

@@ -9,6 +9,14 @@
 
 <h1>LogIn</h1>
 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
 <form action="/login" method="POST">
     
     Username:
@@ -17,8 +25,13 @@
     Password:
     <input type="password" name="password"><br><br>
 
-  <input type="submit"><br>
+  <input type="submit">
 
+</form><br>
+
+<form action="/register">
+	<input type="submit" value="Register">
+	
 </form>
 
 {% endblock %}
