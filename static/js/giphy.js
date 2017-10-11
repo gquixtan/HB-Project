@@ -23,7 +23,6 @@ function showGiphy(evt) {
 				var url	= "http://i.giphy.com/" + giphy_id + ".gif"
 				console.log(url)
 				$('#giphy-field').append('<img src=' + url + ' width="75" height="75" >');
-
 			}
   });
 })
