@@ -3,38 +3,37 @@ from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
 import os
 import twilio_text
-# from datetime import datetime
 from model import connect_to_db, db, User, Text
 
 
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
-app.secret_key = "123go"
+app.secret_key = "ABCD"
 
 app.jinja_env.undefined = StrictUndefined
 
-# gets API key
+# giphy API key
 giphy_key = os.environ["GIPHY_API_KEY"]
 
 
 @app.route("/")
 def index():
-    """Return homepage."""
+    """Renders homepage."""
 
     return render_template("index.html")
 
 
 @app.route("/login", methods=["GET"])
 def login():
-    """log in the user """
+    """logs in the user."""
 
     return render_template("login.html")
 
 
 @app.route("/login", methods=["POST"])
 def login_process():
-    """ Check if the user is in the db and log them in to their profile """
+    """Checks if the user is in the db and if they are, logs them in to their profile."""
 
     # get the username and password from the user through the form
     username = request.form.get('username')
@@ -57,23 +56,22 @@ def login_process():
         session['username'] = user.username
         session['user_id'] = user.user_id
         session['fname'] = user.fname
-        fname = session['fname']
+        session['fname'] = user.fname
 
-        flash("You were successfully logged in")
+        flash(" * You were successfully logged in * ")
         return redirect("/profile")
 
 
 @app.route("/register", methods=["GET"])
 def register():
-    """ create new user """
+    """Renders the register page."""
 
     return render_template("register.html")
 
 
 @app.route("/register", methods=["POST"])
 def register_form():
-    """Register a new user"""
-
+    """Creates a new user in the DB."""
 
     # get the username, fname, lname and password from the user through the form
     fname = request.form.get('firstname')
@@ -82,13 +80,13 @@ def register_form():
     password= request.form.get('password')
 
 
-    # query to see if user is in db
+    # query to see if user is in db.
     user = db.session.query(User).filter(User.password == password, 
                                         User.username == username, 
                                         User.fname == fname,
                                         User.lname == lname).first()
 
-    # if user is not in the database, add user to database
+    # if user is not in the database, add user to db.
     if user is None:
         user = User(username=username, password=password, lname=lname, fname=fname)
         db.session.add(user)
@@ -98,7 +96,7 @@ def register_form():
         session['username'] = user.username
         session['user_id'] = user.user_id
         session['fname'] = user.fname
-        fname = session['fname']
+        session['fname'] = user.fname
 
     else:
         return redirect("/login")
@@ -108,27 +106,29 @@ def register_form():
 
 @app.route("/sendtext")
 def text_form():
-    """ """
+    """Checks if text alredy is in db, if not it adds it to the db."""
 
+    # saves the user_id to session
     user_id = session['user_id']
+
+    # gets all the requiremts for a text from the form the user submits.
     keyword = request.args.get("keyword")
     send_out_date = request.args.get("date")
     phone = request.args.get("phone")
     msg = request.args.get("msg")
 
 
-
+    # checks if texts is alredy in db.
     text = db.session.query(Text).filter(Text.user_id == user_id, Text.phone == phone, 
                                         Text.send_out_date == send_out_date, 
                                         Text.keyword == keyword, Text.msg == msg).first()
-    # print text
 
-
+    # if text is not in db it adds it to the db.
     if text is None:
         text = Text(user_id=user_id, keyword=keyword, phone=phone, msg=msg, send_out_date=send_out_date)
         db.session.add(text)
         db.session.commit()
-        flash("Message has been submitted!")
+        flash("Text has been submitted!")
         return redirect("/profile")
 
     return redirect("/profile")
@@ -145,7 +145,7 @@ def show_profile():
 
 @app.route("/texts")
 def get_texts():
-    """ This route does a query for user's texts """
+    """ This route does a query for user's texts."""
 
     user_texts = db.session.query(Text).filter(Text.user_id == session['user_id']).all()
 
@@ -161,14 +161,19 @@ def get_giphy_key():
 @app.route('/logout')
 def log_out():
     """ route to logout"""
-    
-    if 'person' in session:
-        del session['person']
-        
-    else:
-        print "Youn need to sign in"
+    print "******************************"
+    # print session["user_id"]
+    # print "******************************"
 
-    flash('You were successfully logged out')    
+
+    if "user_id" in session:
+        del session["user_id"]
+        print "** successfully logged out **"
+        
+    # else:
+    #     print "Youn need to sign in"
+
+    flash("* You were successfully logged out *")
     return redirect('/')
 
 

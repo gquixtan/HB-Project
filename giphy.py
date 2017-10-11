@@ -8,13 +8,8 @@ giphy_key = os.environ["GIPHY_API_KEY"]
 # key word to query for giphys
 # key_word = "hapy birthday"
 
-# def get_giphy_key():
-#     """ """ 
-#     return giphy_key
-
-
 def generates_json_giphys(key_word):
-    """ generates """
+    """Generates the request to giphy."""
 
     payload = {
             "q": key_word,

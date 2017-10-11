@@ -5,7 +5,11 @@
 
 {% endblock %}
 {% block content %}
-  <h1>Hi {{ fname }}, Welcome! </h1>
+<a href="/texts">Texts</a>
+<a href="/logout">Log out</a><br><br>
+
+
+<h1>Hi {{ fname }}, Welcome! </h1>
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -44,10 +48,4 @@
 
 <fieldset id="giphy-field">
 </fieldset><br><br>
-
-
-<a href="/texts">Texts</a><br><br>
-
-<a href="/logout">Log out</a>
-
 {% endblock %}
