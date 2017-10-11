@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
-# import json
+import os
 import twilio_text
 # from datetime import datetime
 from model import connect_to_db, db, User, Text
@@ -13,6 +13,9 @@ app = Flask(__name__)
 app.secret_key = "123go"
 
 app.jinja_env.undefined = StrictUndefined
+
+# gets API key
+giphy_key = os.environ["GIPHY_API_KEY"]
 
 
 @app.route("/")
@@ -41,7 +44,6 @@ def login_process():
     # this query checks if user is in the database
     user = db.session.query(User).filter(User.username == username,
                                          User.password == password).first()
-    # print user
 
 
 
@@ -51,7 +53,7 @@ def login_process():
         return redirect("/login")
     # if the is in the db redirect them to their profile and flashed them a succeful logged in msg
     else:
-        # flash('You were successfully logged in')
+        # saves user to session
         session['username'] = user.username
         session['user_id'] = user.user_id
         session['fname'] = user.fname
@@ -91,10 +93,17 @@ def register_form():
         user = User(username=username, password=password, lname=lname, fname=fname)
         db.session.add(user)
         db.session.commit()
+
+        # this adds the user to session 
+        session['username'] = user.username
+        session['user_id'] = user.user_id
+        session['fname'] = user.fname
+        fname = session['fname']
+
     else:
         return redirect("/login")
 
-    return redirect("/login")
+    return redirect("/profile")
 
 
 @app.route("/sendtext")
@@ -129,6 +138,7 @@ def text_form():
 def show_profile():
     """Render profile page."""
 
+    print session
 
     return render_template("profile.html", username=session['username'], fname=session['fname'])
 
@@ -142,18 +152,21 @@ def get_texts():
 
     return render_template("user_texts.html", fname=session['fname'], user_texts=user_texts)
 
+@app.route("/get_giphy_key")
+def get_giphy_key():
+    """ """ 
+    return giphy_key  
+
 
 @app.route('/logout')
 def log_out():
-    """ route to log """ 
-    # print session['person']
+    """ route to logout"""
     
     if 'person' in session:
         del session['person']
         
     else:
-        print "Youn need to sign in" 
-        # flash("Youn need to sign in")
+        print "Youn need to sign in"
 
     flash('You were successfully logged out')    
     return redirect('/')
