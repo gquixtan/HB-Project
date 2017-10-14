@@ -6,7 +6,7 @@ function showGiphy(evt) {
 	evt.preventDefault();
 
 	// obtains the keyword from the user to do the giphy query.
-	var query = $("#query").val()
+	var query = $("#query").val();
 
 	// giphy's key.
 	$.get("/get_giphy_key", function(key){
@@ -17,7 +17,7 @@ function showGiphy(evt) {
 			// console.log(data)
 
 			// data is a dict that has a list of nested dicts.
-			var giphy_data = data
+			var giphy_data = data;
 			// console.log(giphy_data)
 
 			// loops through the list and gets the giphy id
@@ -39,10 +39,21 @@ function showGiphy(evt) {
 				// http://i.giphy.com/W3QKEujo8vztC.gif
 
 				// for img (height="75" width="75")
-				$('#giphy-field').append('<img src=' + url + ' width="200" height="200" >');
-			}
-  });
-})
+				$('#giphy-field').append('<img class="url" src=' + url + ' width="200" height="200" >');
+				}
+
+
+				$('img').click(function(){
+
+				// THIS SAVES THE URL THAT USER CHOOSES TO SEND OUT AS A TEXT
+				var giphy_url = (this.src);
+				console.log("I AM A URL " + giphy_url)
+
+					}	
+			
+  				);
+});
+});
 }
 $('#getGiphy').on('click', showGiphy);
    

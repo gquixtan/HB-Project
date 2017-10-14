@@ -34,9 +34,9 @@ class Text(db.Model):
 
     text_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    keyword = db.Column(db.String(123), nullable=False)
+    keyword = db.Column(db.String(123), nullable=True)
     phone = db.Column(db.String(10), nullable=False)
-    msg = db.Column(db.Text, nullable=True)
+    url = db.Column(db.Text, nullable=True)
     send_out_date = db.Column(db.DateTime, nullable=False)
     sent = db.Column(db.Boolean, nullable=True, default=False)
 
@@ -46,16 +46,13 @@ class Text(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Text text_id=%s user_id=%s keyword=%s phone=%s msg=%s send_out_date=%s sent=%s>" % (self.text_id,
+        return "<Text text_id=%s user_id=%s keyword=%s phone=%s url=%s send_out_date=%s sent=%s>" % (self.text_id,
                                                                                                               self.user_id,
                                                                                                               self.keyword,
                                                                                                               self.phone,
-                                                                                                              self.msg,
+                                                                                                              self.url,
                                                                                                               self.send_out_date,
                                                                                                               self.sent)
-
-
-
 # add a column sent (t/f)?
 # creation_date = db.Column(db.DateTime, nullable=True, default=None) ??? 
 

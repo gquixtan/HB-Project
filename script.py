@@ -14,28 +14,21 @@ import twilio_text
 def todays_query():
 	""" Does a query for texts that need to be send out. """ 
 
-
-	print "*************************************"
-
 	# today is based on UTC (7 hours ahead of actual time)
 	today = datetime.now()
 	print "Today is ", today
-
 	print "*********************************"
 
 	# yesterday is set to UTC time (1 day behind)
-	yesterday = today - timedelta(days=1)
-	print "*********************************"
+	yesterday = today - timedelta(days=2)
 	print "Yesterday is ", yesterday
+	print "*********************************"	
 
 
 	# tomorrow is set to UTC time (1 day ahead)
 	tomorrow = today + timedelta(days=1)
-	print "*********************************"
 	print "Tomorrow is ", tomorrow
-	print "*********************************"	
-
-
+	print "*********************************"
 	
 	todays_date = today.isoformat()
 	today = todays_date[0:10]
