@@ -2,7 +2,8 @@
 
 "use strict";
 
-var listOfGiphs = [];
+// var listOfGiphs = [];
+var giphy_url = " ";
 
 function showGiphy(evt) {
 	evt.preventDefault();
@@ -29,14 +30,14 @@ function showGiphy(evt) {
 				// console.log(giphy_data.data[i].id)
 
 				// giphy id.
-				var giphy_id = giphy_data.data[i].id
+				var giphy_id = giphy_data.data[i].id;
 
 				// testing urls
 				// var url = giphy_data.data[i].original.url
 				// console.log(url)
 
 				// the url for giphys
-				var url	= "http://i.giphy.com/" + giphy_id + ".gif"
+				var url	= "http://i.giphy.com/" + giphy_id + ".gif";
 				// console.log(url)
 
 				// url example:
@@ -44,51 +45,45 @@ function showGiphy(evt) {
 
 				// for img (height="75" width="75")
 				$('#giphy-field').append('<img class="url" src=' + url + ' width="200" height="200" >');
-				}
+			}
 
-
-				$('img').click(function(){
+			$('img').click(function(){
 
 				// THIS SAVES THE URL THAT USER CHOOSES TO SEND OUT AS A TEXT
-				// var giphy_url = (this.src);
-				listOfGiphs.push(this.src)
-				console.log(listOfGiphs);
+				giphy_url = (this.src);
 
-					
+				// this creates a list of giphys
+				// listOfGiphs.push(this.src)
+				// console.log(listOfGiphs);
 
-				// console.log(giphy_url);
+				console.log(giphy_url);
 			});
-				// $.get("/geturl", {
-				// 		"url": listOfGiphs,
-				// 	})
 
-				// 	});
-			
+			$.get("/geturl", {
+					"url": giphy_url,
+			});
   			
 		});
 	});
 }
+
 function getUrl(evt){
 	evt.preventDefault();
 
-	var date = $("#date2").val()
-	var phone = $("#phone2").val()
-	console.log(date)
-	console.log(phone)
+	var date = $("#date2").val();
+	var phone = $("#phone2").val();
+	console.log(date);
+	console.log(phone);
 
 	$.get("/geturl", {
 		"date" : date,
 		"phone" : phone,
-		"urls": listOfGiphs[0]
+		"urls": giphy_url
+		// "urls": listOfGiphs[0]
 	}, function(){
-		$("#form2").submit()
-		// alert("msg has been submitted")
-	})
-
-
-
-
-
+		alert("msg has been submitted");
+		$("#form2").submit();
+	});
 }
 $("#send-url").on("click", getUrl);
 $('#getGiphy').on('click', showGiphy);

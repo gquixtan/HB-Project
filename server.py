@@ -152,38 +152,24 @@ def get_keyword():
     return redirect("/profile")
 
 @app.route("/geturl")
-def ger_url():
+def get_url():
     """ """
-
-    # Text.phone == phone, 
-                                        # Text.send_out_date == send_out_date, 
-                                        # , phone=phone, send_out_date=send_out_date
     print "++++++++++++++++++++++++++++++++++++++++++"
     # saves the user_id to session
     user_id = session['user_id']
-
-    print user_id
-
 
     # gets all the requiremts for a text from the form the user submits.
     url = request.args.get("urls")
     send_out_date = request.args.get("date")
     phone = request.args.get("phone")
     
-
-    # for url in urls:
-    #     print url
-
-    print "-------------------"
-
-    print url
-
-    print "-------------------"
-    print phone
-    print "-----------------------"
-    print send_out_date
-    print "-----------------------"
-
+    # print "-------------------"
+    # print url
+    # print "-------------------"
+    # print phone
+    # print "-----------------------"
+    # print send_out_date
+    # print "-----------------------"
 
     # checks if texts is alredy in db.  Checks if text alredy is in db, if not it adds it to the db.
     text = db.session.query(Text).filter(Text.user_id == user_id, Text.phone == phone, 
@@ -194,19 +180,14 @@ def ger_url():
     if text is None:
         text = Text(user_id=user_id, url=url, phone=phone, send_out_date=send_out_date)
         print "::::::::::::::::::::::::::::::"
-
         print text
-
         print "::::::::::::::::::::::::::::::"
         db.session.add(text)
         db.session.commit()
 
-        flash("Text has been submitted!")
         return redirect("/profile")
 
-    flash("Text has been submitted!")
     return redirect("/profile")    
-
 
 
 @app.route("/profile")
