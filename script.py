@@ -46,13 +46,29 @@ def todays_query():
 	print "text is ", text
 	print "*********************************"
 
+	# for t in text:
+	# 	if t.keyword is not None:
+	# 		print t.keyword, t.send_out_date, t.sent
+
+	# print text.filter_by(Text.keyword).all
+
+
+	print "------------------------------------"
+
+
+
 	# crerating a list of nested dicts and each dict is a text,
 	text_data = [ ]
 
 	for item in text:
 		# print item
 		# creating a dict and adding it to text_data list
-		text_data.append({"id": item.text_id, "keyword": item.keyword, "phone": item.phone, "msg": item.msg, "date": item.send_out_date, "sent": item.sent})
+		text_data.append({"id": item.text_id, "keyword": item.keyword, "phone": item.phone, "url": item.url,  "date": item.send_out_date, "sent": item.sent})
+
+	print "I am the list of nested dictionaries: ", text_data
+	# "url": item.url,
+	print "--------------------"
+
 
 	return text_data
 
@@ -61,19 +77,34 @@ def send_text(text_data):
 	""" This function is passing a nested list of dicts & checks for texts that need to be send and if they alredy were sent for the day
 	they do not get resend """
 
+	# print "INSID THE SEND_TEXT: ", text_data
+
+
 	for item in text_data:
 		keyword = item["keyword"]
 		text_id = item["id"]
-		msg = item["msg"]
+		# url = item["url"]
 		status = item["sent"]
+
+		print "I am a keyword in send text func ", keyword
+
+		
 
 		# This checks for text status and if it was succefully sent it will not send it again. 
 		if status == True:
 			return "*** ALREADY SENT ***"
 
-		else:
+		# if keyword is not empty send the text	
+		# elif keyword != '' and keyword is not None: 
+	elif keyword:
+		
 			# this is for twilio/giphy response
+			# print 'keyword', keyword
+			# raise
+
 			response = twilio_text.send_text(keyword)
+
+			# response2 = twilio_text.send_text_url(url)
 
 			# this checks status of the sent text and updates the DB.
 			sent = db.session.query(Text).filter(Text.text_id == text_id).first()
@@ -96,5 +127,5 @@ if __name__ == "__main__":
     todays_query()
 
     text_data = todays_query()
-    send_text(text_data)
+    print send_text(text_data)
 

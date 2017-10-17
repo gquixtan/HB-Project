@@ -17,6 +17,7 @@
     <table>
     	<tr>
 		    <th> KEYWORD </th>
+		    <th> URL </th>
 		    <th> TO </th>
 		    <th> DATE </th>
 		    <th> SENT </th>
@@ -24,9 +25,10 @@
     {% for text in user_texts %}
 		<tr>
 		  	<td> {{ text.keyword }}</td>
-		    <td> {{ text.phone }}</td>
-		    <td> {{ text.send_out_date.strftime("%B %d, %Y") }}</td>
-		    <td> {{ text.sent }}</td>
+		  	<td> {{ text.url }} </td>
+		    <td> {{ text.phone }} </td>
+		    <td> {{ text.send_out_date.strftime("%B %d, %Y") }} </td>
+		    <td> {{ text.sent }} </td>
 		</tr>
     {% endfor %}		
 	</table><br><br>

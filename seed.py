@@ -45,10 +45,10 @@ def load_texts():
 
         # I was getting this ("ValueError: too many values to unpack") so i slice the unpacking into 2.
         text_id, user_id, keyword= row[0:3]
-        phone, msg, send_out_date, sent = row[3:]
+        phone, url, send_out_date, sent = row[3:]
 
         text = Text(text_id=text_id, user_id=user_id, keyword=keyword, phone=phone,
-                    msg=msg, send_out_date=send_out_date, sent=sent)
+                    url=url, send_out_date=send_out_date, sent=sent)
 
         # need to have "add" to the session or it won't ever be stored
         db.session.add(text)

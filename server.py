@@ -104,34 +104,109 @@ def register_form():
     return redirect("/profile")
 
 
-@app.route("/sendtext")
-def text_form():
-    """Checks if text alredy is in db, if not it adds it to the db."""
+@app.route("/getkeyword")
+def get_keyword():
+    """Gets keyword, phone and date from a form and saves it to the db"""
 
+    print "++++++++++++++++++++++++++++++++++++++++++"
     # saves the user_id to session
     user_id = session['user_id']
+
+    user_id
+
+    print "++++++++++++++++++++++++++++++++++++++++++"
 
     # gets all the requiremts for a text from the form the user submits.
     keyword = request.args.get("keyword")
     send_out_date = request.args.get("date")
     phone = request.args.get("phone")
-    msg = request.args.get("msg")
 
 
-    # checks if texts is alredy in db.
+    # print "-------------------"
+
+    # # print url
+
+    # print "-------------------"
+
+
+    # checks if texts is alredy in db.  Checks if text alredy is in db, if not it adds it to the db.
     text = db.session.query(Text).filter(Text.user_id == user_id, Text.phone == phone, 
                                         Text.send_out_date == send_out_date, 
-                                        Text.keyword == keyword, Text.msg == msg).first()
+                                        Text.keyword == keyword).first()
 
     # if text is not in db it adds it to the db.
     if text is None:
-        text = Text(user_id=user_id, keyword=keyword, phone=phone, msg=msg, send_out_date=send_out_date)
+        text = Text(user_id=user_id, keyword=keyword, phone=phone, send_out_date=send_out_date)
+        print "::::::::::::::::::::::::::::::"
+
+        print text
+
+        print "::::::::::::::::::::::::::::::"
         db.session.add(text)
         db.session.commit()
+ 
+
         flash("Text has been submitted!")
         return redirect("/profile")
 
     return redirect("/profile")
+
+@app.route("/geturl")
+def ger_url():
+    """ """
+
+    # Text.phone == phone, 
+                                        # Text.send_out_date == send_out_date, 
+                                        # , phone=phone, send_out_date=send_out_date
+    print "++++++++++++++++++++++++++++++++++++++++++"
+    # saves the user_id to session
+    user_id = session['user_id']
+
+    print user_id
+
+
+    # gets all the requiremts for a text from the form the user submits.
+    url = request.args.get("urls")
+    send_out_date = request.args.get("date")
+    phone = request.args.get("phone")
+    
+
+    # for url in urls:
+    #     print url
+
+    print "-------------------"
+
+    print url
+
+    print "-------------------"
+    print phone
+    print "-----------------------"
+    print send_out_date
+    print "-----------------------"
+
+
+    # checks if texts is alredy in db.  Checks if text alredy is in db, if not it adds it to the db.
+    text = db.session.query(Text).filter(Text.user_id == user_id, Text.phone == phone, 
+                                        Text.send_out_date == send_out_date, 
+                                        Text.url == url).first()
+
+    # if text is not in db it adds it to the db.
+    if text is None:
+        text = Text(user_id=user_id, url=url, phone=phone, send_out_date=send_out_date)
+        print "::::::::::::::::::::::::::::::"
+
+        print text
+
+        print "::::::::::::::::::::::::::::::"
+        db.session.add(text)
+        db.session.commit()
+
+        flash("Text has been submitted!")
+        return redirect("/profile")
+
+    flash("Text has been submitted!")
+    return redirect("/profile")    
+
 
 
 @app.route("/profile")
@@ -154,7 +229,7 @@ def get_texts():
 
 @app.route("/get_giphy_key")
 def get_giphy_key():
-    """ """ 
+    """gets the giphy api key for giphy.js""" 
     return giphy_key  
 
 

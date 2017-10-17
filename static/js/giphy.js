@@ -2,11 +2,14 @@
 
 "use strict";
 
+var listOfGiphs = [];
+
 function showGiphy(evt) {
 	evt.preventDefault();
 
 	// obtains the keyword from the user to do the giphy query.
 	var query = $("#query").val();
+
 
 	// giphy's key.
 	$.get("/get_giphy_key", function(key){
@@ -18,6 +21,7 @@ function showGiphy(evt) {
 
 			// data is a dict that has a list of nested dicts.
 			var giphy_data = data;
+			
 			// console.log(giphy_data)
 
 			// loops through the list and gets the giphy id
@@ -46,14 +50,46 @@ function showGiphy(evt) {
 				$('img').click(function(){
 
 				// THIS SAVES THE URL THAT USER CHOOSES TO SEND OUT AS A TEXT
-				var giphy_url = (this.src);
-				console.log("I AM A URL " + giphy_url)
+				// var giphy_url = (this.src);
+				listOfGiphs.push(this.src)
+				console.log(listOfGiphs);
 
-					}	
+					
+
+				// console.log(giphy_url);
+			});
+				// $.get("/geturl", {
+				// 		"url": listOfGiphs,
+				// 	})
+
+				// 	});
 			
-  				);
-});
-});
+  			
+		});
+	});
 }
+function getUrl(evt){
+	evt.preventDefault();
+
+	var date = $("#date2").val()
+	var phone = $("#phone2").val()
+	console.log(date)
+	console.log(phone)
+
+	$.get("/geturl", {
+		"date" : date,
+		"phone" : phone,
+		"urls": listOfGiphs[0]
+	}, function(){
+		$("#form2").submit()
+		// alert("msg has been submitted")
+	})
+
+
+
+
+
+}
+$("#send-url").on("click", getUrl);
 $('#getGiphy').on('click', showGiphy);
    

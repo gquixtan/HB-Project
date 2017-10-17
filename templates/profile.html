@@ -20,14 +20,23 @@
 {% endwith %}
 <br><br>
 
- 
-<form action="/sendtext">
+ <h4> SUBMIT YOUR TEXT USING A KEYWORD</h4><br><br>
 
-    <label> SUBMIT YOUR NEXT TEXT </label><br><br>
-    Keyword: <br>
+<form action="/getkeyword">
+
+    Enter KEYWORD for a Giphy: <br>
     <input type="text" name="keyword" value="" required><br><br>
-    Message: <br>
-    <input type="text" name="msg"><br><br>
+    <!-- Message: <br>
+    <input type="text" name="msg"><br><br> -->
+
+<!--  Or Select a GIPHY: <br>
+    <input type="text" name="search" id="query" placeholder="Search..">
+    <input type="submit" value="Submit">
+    <button id='getGiphy'>Now!</button><br><br>
+
+    <fieldset id="giphy-field">
+    </fieldset><br> -->
+
     Schedule Date: <br>
     <input id="date" type="date" name="date" required><br><br>
     <!-- <input id="date" type="datetime-local" name="date" value="2017-12-11" required><br><br> -->
@@ -37,12 +46,28 @@
 
 </form><br><br>
 
-<form>
-  <input type="text" name="search" id="query" placeholder="Search..">
-  <!-- <input type="submit" value="Submit"> -->
-  <button id='getGiphy'>Giphy!</button>
+<hr><br>
+
+ <h4> SUBMIT YOUR TEXT WITH YOUR CHOICE OF GIPHY </h4><br><br>
+
+<form action="/profile" id="form2">
+
+    Select a GIPHY: <br>
+    <input type="text" name="search" id="query" placeholder="...">
+    <!-- <input type="submit" value="Submit"> -->
+    <button id='getGiphy'>Search</button><br><br>
+
+    <fieldset id="giphy-field">
+    </fieldset><br><br>
+
+    Schedule Date: <br>
+    <input id="date2" type="date" required><br><br>
+    <!-- <input id="date" type="datetime-local" name="date" value="2017-12-11" required><br><br> -->
+    Phone Number: <br>
+    <input id="phone2" type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required><br><br>
+    <input type="submit" id="send-url" value="Submit">
+
 </form><br><br>
 
-<fieldset id="giphy-field">
-</fieldset><br><br>
+
 {% endblock %}
