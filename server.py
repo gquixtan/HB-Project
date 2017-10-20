@@ -45,7 +45,6 @@ def login_process():
                                          User.password == password).first()
 
 
-
     # if the user in not registered redirect them to register
     if user is None:
         flash ("Oops, did you type the right username or password?")
@@ -56,7 +55,7 @@ def login_process():
         session['username'] = user.username
         session['user_id'] = user.user_id
         session['fname'] = user.fname
-        session['fname'] = user.fname
+
 
         flash(" * You were successfully logged in * ")
         return redirect("/profile")
@@ -96,7 +95,6 @@ def register_form():
         session['username'] = user.username
         session['user_id'] = user.user_id
         session['fname'] = user.fname
-        session['fname'] = user.fname
 
     else:
         return redirect("/login")
@@ -108,26 +106,13 @@ def register_form():
 def get_keyword():
     """Gets keyword, phone and date from a form and saves it to the db"""
 
-    print "++++++++++++++++++++++++++++++++++++++++++"
     # saves the user_id to session
     user_id = session['user_id']
-
-    user_id
-
-    print "++++++++++++++++++++++++++++++++++++++++++"
 
     # gets all the requiremts for a text from the form the user submits.
     keyword = request.args.get("keyword")
     send_out_date = request.args.get("date")
     phone = request.args.get("phone")
-
-
-    # print "-------------------"
-
-    # # print url
-
-    # print "-------------------"
-
 
     # checks if texts is alredy in db.  Checks if text alredy is in db, if not it adds it to the db.
     text = db.session.query(Text).filter(Text.user_id == user_id, Text.phone == phone, 
@@ -137,11 +122,6 @@ def get_keyword():
     # if text is not in db it adds it to the db.
     if text is None:
         text = Text(user_id=user_id, keyword=keyword, phone=phone, send_out_date=send_out_date)
-        print "::::::::::::::::::::::::::::::"
-
-        print text
-
-        print "::::::::::::::::::::::::::::::"
         db.session.add(text)
         db.session.commit()
  
@@ -153,23 +133,15 @@ def get_keyword():
 
 @app.route("/geturl")
 def get_url():
-    """ """
-    print "++++++++++++++++++++++++++++++++++++++++++"
+    """This route get the required info from form number two on profile."""
+
     # saves the user_id to session
     user_id = session['user_id']
 
     # gets all the requiremts for a text from the form the user submits.
-    url = request.args.get("urls")
+    url = request.args.get("url")
     send_out_date = request.args.get("date")
     phone = request.args.get("phone")
-    
-    # print "-------------------"
-    # print url
-    # print "-------------------"
-    # print phone
-    # print "-----------------------"
-    # print send_out_date
-    # print "-----------------------"
 
     # checks if texts is alredy in db.  Checks if text alredy is in db, if not it adds it to the db.
     text = db.session.query(Text).filter(Text.user_id == user_id, Text.phone == phone, 
@@ -179,9 +151,6 @@ def get_url():
     # if text is not in db it adds it to the db.
     if text is None:
         text = Text(user_id=user_id, url=url, phone=phone, send_out_date=send_out_date)
-        print "::::::::::::::::::::::::::::::"
-        print text
-        print "::::::::::::::::::::::::::::::"
         db.session.add(text)
         db.session.commit()
 
@@ -194,8 +163,6 @@ def get_url():
 def show_profile():
     """Render profile page."""
 
-    print session
-
     return render_template("profile.html", username=session['username'], fname=session['fname'])
 
 
@@ -205,29 +172,24 @@ def get_texts():
 
     user_texts = db.session.query(Text).filter(Text.user_id == session['user_id']).all()
 
-
     return render_template("user_texts.html", fname=session['fname'], user_texts=user_texts)
+
 
 @app.route("/get_giphy_key")
 def get_giphy_key():
-    """gets the giphy api key for giphy.js""" 
-    return giphy_key  
+    """gets the giphy api key for giphy.js"""
+
+    return giphy_key
 
 
 @app.route('/logout')
 def log_out():
     """ route to logout"""
-    print "******************************"
-    # print session["user_id"]
-    # print "******************************"
-
 
     if "user_id" in session:
         del session["user_id"]
         print "** successfully logged out **"
-        
-    # else:
-    #     print "Youn need to sign in"
+
 
     flash("* You were successfully logged out *")
     return redirect('/')

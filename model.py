@@ -53,14 +53,30 @@ class Text(db.Model):
                                                                                                               self.url,
                                                                                                               self.send_out_date,
                                                                                                               self.sent)
-# add a column sent (t/f)?
-# creation_date = db.Column(db.DateTime, nullable=True, default=None) ??? 
 
-def connect_to_db(app):
+
+def test_texts():
+    """Create sample data."""
+
+    # In case this is run more than once, empty out existing data
+    User.query.delete()
+    Text.query.delete()
+
+    Shakira = User(fname="Shakira",lname="Ripoll", username="shakira", password="123go")
+    Fergie = User(fname="Fergie", lname="Licious", username="fergalicious", password="123go")
+
+    Cat = Text(keyword="funny", phone="4436668889", send_out_date="2017,3,23", sent="t")
+    Dance= Text(keyword="dance", phone="4436668889", send_out_date="2017,3,23", sent="t")
+
+    db.session.add_all([Shakira, Fergie, Cat, Dance])
+    db.session.commit()    
+
+
+def connect_to_db(app, db_uri="postgresql:///texts"):
     """Connect the database to our Flask app."""
 
     # Configure to use our database.
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres:///texts'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     app.config['SQLALCHEMY_ECHO'] = True
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app

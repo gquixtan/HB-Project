@@ -22,8 +22,6 @@ function showGiphy(evt) {
 
 			// data is a dict that has a list of nested dicts.
 			var giphy_data = data;
-			
-			// console.log(giphy_data)
 
 			// loops through the list and gets the giphy id
 			for (var i=0; i < giphy_data.data.length; i++){
@@ -44,23 +42,18 @@ function showGiphy(evt) {
 				// http://i.giphy.com/W3QKEujo8vztC.gif
 
 				// for img (height="75" width="75")
-				$('#giphy-field').append('<img class="url" src=' + url + ' width="200" height="200" >');
+				$('#giphy-field').append('<button><img class="url" src=' + url + ' width="200" height="200"></button>');
 			}
 
-			$('img').click(function(){
+			$('button img').click(function(){
 
 				// THIS SAVES THE URL THAT USER CHOOSES TO SEND OUT AS A TEXT
 				giphy_url = (this.src);
+				console.log(giphy_url);				
 
 				// this creates a list of giphys
 				// listOfGiphs.push(this.src)
 				// console.log(listOfGiphs);
-
-				console.log(giphy_url);
-			});
-
-			$.get("/geturl", {
-					"url": giphy_url,
 			});
   			
 		});
@@ -78,7 +71,7 @@ function getUrl(evt){
 	$.get("/geturl", {
 		"date" : date,
 		"phone" : phone,
-		"urls": giphy_url
+		"url": giphy_url
 		// "urls": listOfGiphs[0]
 	}, function(){
 		alert("msg has been submitted");

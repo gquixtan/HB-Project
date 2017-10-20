@@ -58,7 +58,6 @@ def todays_query():
 	# print "I am the list of nested dictionaries: ", text_data
 	print "--------------------"
 
-
 	return text_data
 
 
