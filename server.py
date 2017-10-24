@@ -195,7 +195,8 @@ def log_out():
     return redirect('/')
 
 
-if __name__ == "__main__":
+
+if __name__ == "__main__": #pragma: no cover
     # app.run(port=5000, host='0.0.0.0')
     app.debug = True
     app.jinja_env.auto_reload = app.debug  # make sure templates, etc. are not cached in debug mode

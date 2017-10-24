@@ -1,34 +1,48 @@
 {% extends "base.html" %}
 {% block title %}Register{% endblock %}
 
-{% block head %}
-
-{% endblock %}
-
 {% block content %}
+<h1>Create account</h1>
+<div class="row" id="register">
 
-<h1>Register</h1>
 
-<form action="/register" method="POST">
+    <form action="/register" method="POST">
 
-    First Name:
-    <input type="text" name="firstname" value=""><br><br>
-   
-    Last Name:
-    <input type="text" name="lasttname" value=""><br><br>
+        <div class="col-sm">
+            <label for="fname">First Name:</label><br>
+            <input type="text" class="form-control" name="firstname" value="">
+       
+       
+            <label for="lname">Last Name:</label><br>
+            <input type="text" class="form-control" name="lasttname" value="">
+     
 
-    Username:
-    <input type="text" name="username"><br><br>
+        
+            <label for="username">Username:</label><br>
+            <input type="text" class="form-control" name="username">
+      
+        
+            <label for="pwd">Password:</label><br>
+            <input type="password" class="form-control" name="password">
 
-    Password:
-    <input type="password" name="password"><br><br>
 
-  <input type="submit"><br>
+        <div class="checkbox">
+          <label><input type="checkbox" name="remember"> Remember me</label>
+        </div>
 
-</form><br>
+      <input class="btn btn-default form-control" type="submit" value="Create your Giphted account">
+    </div>
+    </form>
 
-<form action="/login">
-	<input type="submit" value="LogIn">
-</form>
+
+    <div class="col-sm">
+        <form class="login" action="/login">
+            <label>Already have an account?</label>
+        	<input class="btn btn-default form-control" type="submit" value="Sign in">
+        </form>
+    </div>
+
+ 
+</div>    
 
 {% endblock %}

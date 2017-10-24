@@ -82,7 +82,7 @@ def connect_to_db(app, db_uri="postgresql:///texts"):
     db.app = app
     db.init_app(app)
 
-if __name__ == "__main__":
+if __name__ == "__main__": #pragma: no cover
     # from flask import Flask
     from server import app
     app = Flask(__name__)

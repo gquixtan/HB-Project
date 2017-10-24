@@ -1,0 +1,142 @@
+body {
+	/*elestic scroll*/
+	margin: 0;
+	padding: 0;
+	background-image: url("../img/footer_lodyas.png");
+	/*font-family: 'Oxygen', sans-serif;*/
+	font-family: 'Ubuntu', sans-serif;
+	color: rgb(44, 102, 162);
+
+
+}
+
+h2 {
+	color: rgb(235, 235, 235);
+	text-align: center;
+	padding-bottom: 3%;
+}
+h1 {
+	background-color: rgb(235, 235, 235);
+	width: 32%;
+	margin-left: 35%;
+	text-align: center;
+	padding-bottom: 22px;
+	margin-top: 84px;
+	padding-top: 17px;
+	border-radius: 10px;
+	font-family: 'Vollkorn', serif;
+	/*font-family: 'Princess Sofia', cursive;*/
+	/*font-family: 'Dancing Script', cursive;*/
+	margin-bottom: 55px;
+	box-shadow: 0px 5px 5px #888888;
+}
+
+
+div.alert {
+	background-image: url("../img/blue.gif");
+	padding-top: 2%;
+	background-color: transparent;
+	border: none;
+	width:  40%;
+	text-align: center;
+	margin-left: 30%;
+	margin-top: 5%;
+	color: rgb(235, 235, 235);
+}
+.alert.pink {
+	background-image: url("../img/pink.gif");
+
+}
+input {
+	background-color: rgb(235, 235, 235);	
+}
+input.form-control {
+	background-color: rgb(235, 235, 235);
+}
+
+div#index.row {
+	text-align: center;
+	background-color: rgb(124,206,226);
+	/*background-color: rgb(169,253,232);
+	/*background-color: rgb(124, 223, 226);*/
+	position: absolute;
+	width: 32%;
+	height: 33%;
+	border-radius: 20px;
+	border: 2px gray solid;
+	margin-left: 34%;
+}
+div.left.col-sm-6 {
+	background-color: rgb(176, 143, 250);
+	padding-bottom: 60px;
+	border: 1px gray solid;
+	width: 33%;
+    margin: 3%;
+    border-radius: 1%;
+    box-shadow: 10px 10px 5px #888888;
+}
+input.keyword {
+	color: black;
+}
+div.right.col-sm-6 {
+	background-color: rgb(255, 188, 254);
+	padding-bottom: 30px;
+	margin: 4%;
+	border-radius: 5px;
+	min-width: 50%;
+	min-height: 30%;
+	border: 1px gray solid;
+	box-shadow: 10px 10px 5px #888888;
+}
+div.row.out {
+	background-color: rgb(235, 235, 235);
+	/*border-radius: 8px;*/
+    margin: 3%;
+}
+div#register.row {
+	text-align: left;
+	background-color: rgb(253,169,232);
+	/*background-color: rgb(255, 188, 254);*/
+	position: absolute;
+	width: 40%;
+	/*height: 50%;*/
+	min-height: 60%;
+	border-radius: 10px;
+	border: 2px gray solid;
+	margin-left:  30%;
+	margin-bottom: 17%;
+
+}
+div.col-sm {
+	margin: 10%;
+}
+
+div#login.row{
+	text-align: center;
+	background-color: rgb(176, 143, 250);
+	width: 33%;
+	height: 40%;
+	border-radius: 10px;
+	border: 2px gray solid;
+	margin-left: 35%;
+}
+div.checkbox label{
+	margin-right: 59%;
+}
+
+table {
+	background-color: rgb(235, 235, 235);
+	margin: 5px;
+}
+
+h5.text {
+	text-align: left;
+	color: black;
+	padding-bottom: 40px;
+
+}
+
+ul.navbar.navbar-inverse.navbar-fixed-bottom {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}

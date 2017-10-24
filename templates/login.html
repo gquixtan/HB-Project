@@ -7,31 +7,50 @@
 
 {% block content %}
 
-<h1>LogIn</h1>
+<h1>Sign in</h1>
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     {% for message in messages %}
-      {{ message }}
+      <div class="alert pink">
+      <strong>{{ message }}</strong>
+      </div>
     {% endfor %}
   {% endif %}
 {% endwith %}
 
-<form action="/login" method="POST">
-    
-    Username:
-    <input type="text" name="username"><br><br>
+<div class="row" id="login">
 
-    Password:
-    <input type="password" name="password"><br><br>
 
-  <input type="submit">
+  <form action="/login" method="POST">
 
-</form><br>
+    <div class="col-sm form-sign-in">
+        <label for="fname">Username:</label>
+        <input type="text"  class="form-control" name="username">
+      
+       
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" name="password">
 
-<form action="/register">
-	<input type="submit" value="Register">
-	
-</form>
+
+      <div class="checkbox">
+          <label><input type="checkbox" name="remember">Remember me</label>
+      </div>
+      <input  class="form-control" type="submit" value="Sign in">
+      </div>
+
+  </form>
+
+  <h4><span>New to GiphMaid? </span></h4>
+  
+
+  <div class="col-sm register">
+    <form action="/register" class="col-sm register">
+  	 <input type="submit" class="form-control" value="Create your GiphMaid account">
+    </form><br>
+  </div>  
+
+</div>
+
 
 {% endblock %}

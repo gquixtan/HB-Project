@@ -143,9 +143,10 @@ class FlaskTestsDatabase(TestCase):
                 sess["fname"]="Shakira"
                 sess["user_id"]=1
                 sess["username"]="shakira"
+                # not working properly
 
             result = self.client.get("/getkeyword", 
-                                    query_string={"date":"2017,3,23", "user_id": "1", "keyword":"funny", "phone":"4436668889", "sent": "t"},
+                                    query_string={"date":"2017,3,23", "keyword":"funny", "phone":"4436668889"},
                                     follow_redirects=True)
 
             self.assertIn("Hi Shakira, Welcome!", result.data)                                   

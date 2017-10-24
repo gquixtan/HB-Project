@@ -1,26 +1,39 @@
 {% extends "base.html" %}
 {% block title %}Texts{% endblock %}
 
-{% block head %}
-
-{% endblock %}
-
 {% block content %}
+<!-- 
+<a href="/profile">Profile</a> <a href="/logout">Log out</a><br><br> -->
 
-<a href="/profile">Profile</a> <a href="/logout">Log out</a><br><br>
+
+{% if fname %}
+
+<header class="navbar-top">
+    <nav class="navbar navbar-header">
+        <!-- <div class=""> -->
+            <ul class="nav navbar-nav">
+            <li class="active"><a href="/profile">Profile<span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="/logout">Log Out <span class="sr-only">(current)</span></a></li>
+            </ul>
+        <!-- </div>     -->
+    </nav>
+</header>
+{% endif %}
 
   <h1>Hey {{ fname }}! </h1><br>
 
-    <h2>Your Text History:</h2><br>
+    <h2>Your Text History</h2><br>
 
 
-    <table>
+<!-- <div class= "container"> -->
+    <table class="table table-striped">
     	<tr>
 		    <th> KEYWORD </th>
 		    <th> URL </th>
 		    <th> TO </th>
 		    <th> DATE </th>
 		    <th> SENT </th>
+		    <th> DELETE </th>
 	  	</tr>
     {% for text in user_texts %}
 		<tr>
@@ -29,10 +42,12 @@
 		    <td> {{ text.phone }} </td>
 		    <td> {{ text.send_out_date.strftime("%B %d, %Y") }} </td>
 		    <td> {{ text.sent }} </td>
-		    <td><button>Delete</button></td>
+		    <td><button> Delete </button></td>
 		</tr>
     {% endfor %}		
-	</table><br><br>
+	</table>
+<!-- </div> -->
+
    
 
 {% endblock %}
