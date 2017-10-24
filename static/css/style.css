@@ -6,15 +6,8 @@ body {
 	/*font-family: 'Oxygen', sans-serif;*/
 	font-family: 'Ubuntu', sans-serif;
 	color: rgb(44, 102, 162);
-
-
 }
 
-h2 {
-	color: rgb(235, 235, 235);
-	text-align: center;
-	padding-bottom: 3%;
-}
 h1 {
 	background-color: rgb(235, 235, 235);
 	width: 32%;
@@ -30,7 +23,17 @@ h1 {
 	margin-bottom: 55px;
 	box-shadow: 0px 5px 5px #888888;
 }
-
+h2 {
+	color: rgb(235, 235, 235);
+	text-align: center;
+	padding-bottom: 3%;
+}
+h5.text {
+	text-align: left;
+	color: black;
+	padding-bottom: 32px;
+	padding-top: 22px;
+}
 
 div.alert {
 	background-image: url("../img/blue.gif");
@@ -59,8 +62,8 @@ div#index.row {
 	background-color: rgb(124,206,226);
 	/*background-color: rgb(169,253,232);
 	/*background-color: rgb(124, 223, 226);*/
-	position: absolute;
-	width: 32%;
+	/*position: absolute;*/
+	width: 33%;
 	height: 33%;
 	border-radius: 20px;
 	border: 2px gray solid;
@@ -128,15 +131,12 @@ table {
 	background-color: rgb(235, 235, 235);
 	margin: 5px;
 }
-
-h5.text {
-	text-align: left;
-	color: black;
-	padding-bottom: 40px;
-
+.table {
+	margin-bottom: 4%;
+}
+p.mute {
+	margin-top: 10%;
+	padding-left: 80%;
+	margin-bottom: 2%;
 }
 
-ul.navbar.navbar-inverse.navbar-fixed-bottom {
-	padding-top: 10px;
-	padding-bottom: 10px;
-}
