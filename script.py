@@ -16,34 +16,36 @@ def todays_query():
 
 	# today is based on UTC (7 hours ahead of actual time)
 	today = datetime.now()
-	print "Today is ", today
-	print "*********************************"
 
 	# yesterday is set to UTC time (1 day behind)
-	yesterday = today - timedelta(days=2)
-	print "Yesterday is ", yesterday
-	print "*********************************"	
+	yesterday = today - timedelta(days=1)
+	
 
 
 	# tomorrow is set to UTC time (1 day ahead)
 	tomorrow = today + timedelta(days=1)
-	print "Tomorrow is ", tomorrow
-	print "*********************************"
+
 	
 	todays_date = today.isoformat()
 	today = todays_date[0:10]
+	print "Today is: ", today
+	print "*********************************"
 
 
 	yesterdays_date = yesterday.isoformat()
 	yesterday = yesterdays_date[0:10]
+	print "Yesterday was: ", yesterday
+	print "*********************************"
 
 	tomorrows_date = tomorrow.isoformat()
 	tomorrow = tomorrows_date[0:10]
+	print "Tomorrow will be: ", tomorrow
+	print "*********************************"
 
 	# doing a query for texts that need to be send out (UTC time is 7 hours ahead of Pacific Time)
 	text = db.session.query(Text).filter((Text.send_out_date > yesterday ) & (Text.send_out_date < tomorrow) & (Text.sent == "f")).all()
 
-	print "text is ", text
+	print "TEXT IS --> ", text
 	print "*********************************"
 
 	# crerating a list of nested dicts and each dict is a text,
@@ -56,7 +58,7 @@ def todays_query():
 		text_data.append({"id": item.text_id, "keyword": item.keyword, "phone": item.phone, "url": item.url,  "date": item.send_out_date, "sent": item.sent})
 
 	# print "I am the list of nested dictionaries: ", text_data
-	print "--------------------"
+	# print "--------------------"
 
 	return text_data
 
@@ -65,7 +67,7 @@ def send_text(text_data):
 	""" This function is passing a nested list of dicts & checks for texts that need to be send and if they alredy were sent for the day
 	they do not get resend """
 
-	print "INSID THE SEND_TEXT: ", text_data
+	print "INSIDE SEND TEXT FUNC! ", text_data
 
 	for item in text_data:
 		keyword = item["keyword"]

@@ -26,6 +26,7 @@ function showGiphy(evt) {
 			// loops through the list and gets the giphy id
 			for (var i=0; i < giphy_data.data.length; i++){
 				// console.log(giphy_data.data[i].id)
+				
 
 				// giphy id.
 				var giphy_id = giphy_data.data[i].id;
@@ -74,7 +75,7 @@ function getUrl(evt){
 		"url": giphy_url
 		// "urls": listOfGiphs[0]
 	}, function(){
-		alert("msg has been submitted");
+		alert("Your texts has been submitted!");
 		$("#form2").submit();
 	});
 }
